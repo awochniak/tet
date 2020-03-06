@@ -5,6 +5,8 @@ page_title                                : P24 Mobile SDK                      
 p24_android_lib_url                       : https://github.com/przelewy24/p24-mobile-lib-android                                         
 p24_flutter_lib_url                       : https://github.com/przelewy24/p24-mobile-lib-flutter                                          
 p24_ios_lib_url                           : https://github.com/przelewy24/p24-mobile-lib-ios                                                            
+p24_xamarin_lib_url                       : https://github.com/przelewy24/p24-mobile-lib-xamarin                                                            
+p24_react_lib_url                         : https://github.com/przelewy24/p24-mobile-lib-react-native-example                                                            
 
 
 #App config
