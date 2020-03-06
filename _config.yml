@@ -10,7 +10,7 @@ app_icon                                  : assets/logo/favicon.ico             
 app_logo                                  : assets/logo/logo.png                     
 app_name                                  : Biblioteki mobilne Przelewy24                                          # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
 app_price                                 :                                           # Automatically populates if not set and if iOS app ID is set.  Otherwise enter manually.
-app_description                           : Zestaw bibliotek Przelewy24 przeznaczonych na platformy mobilne.
+app_description                           : Zestaw bibliotek Przelewy24 przeznaczonych na  najbardziej znane platformy mobilne:
 
 enable_smart_app_banner                   : true                                      # Set to true to show a smart app banner at top of page on mobile devices.
 
