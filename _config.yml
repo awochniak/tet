@@ -2,6 +2,9 @@
 page_title                                : P24 Mobile SDK                                           # Automatically populates with app name if not set and if iOS app ID is set. Otherwise enter manually.
 
 # P24 URL CONFIG
+p24_docs_url                              : https://developers.przelewy24.pl/index.php?pl
+p24_docs_title                            : Dokumentacja techniczna
+
 p24_android_lib_url                       : https://github.com/przelewy24/p24-mobile-lib-android                                         
 p24_flutter_lib_url                       : https://github.com/przelewy24/p24-mobile-lib-flutter                                          
 p24_ios_lib_url                           : https://github.com/przelewy24/p24-mobile-lib-ios                                                            
