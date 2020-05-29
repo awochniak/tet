@@ -1,0 +1,121 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(data.table)
+library(tidyverse)
+library(lubridate)
+library(xlsx)
+library(readxl)
+library(dplyr)
+library(VIM)
+library(caret)
+```
+
+```{r}
+cities <- fread('data-raw/cities.csv',encoding = "UTF-8")
+head(cities)
+```
+
+
+```{r}
+districts <- fread('data-raw/districts.csv',encoding = "UTF-8")
+dim(districts)
+head(districts)
+```
+
+```{r}
+train1 <- fread("train-small1_1.csv",encoding = "UTF-8")
+train2 <- fread("train-small2_2.csv",encoding = "UTF-8")
+train3 <- fread("train-small3_3.csv",encoding = "UTF-8")
+
+head(train1)
+train<-rbind(train1,train2,train3, use.names = F)
+
+```
+
+```{r}
+test <- fread(file = 'data-raw/test-small.csv',encoding = 'UTF-8')
+
+head(test)
+```
+
+
+```{r}
+train <- train %>% 
+  mutate(created_at_first = ymd_hms(created_at_first),
+         yq = quarter(created_at_first, with_year = T))
+head(train)
+```
+```{r}
+
+train %>%
+  select(id, category,  region_id, price, params, is_business) %>%
+  mutate(floor_area = str_extract(params, "m<=>\\d{1,}(\\.\\d{1,2})?"),
+         floor_area = str_extract(floor_area, "\\d{1,}(\\.\\d{1,2})?"),
+         floor_area = as.numeric(floor_area),
+         rooms_num = str_extract(params, "rooms_num<=>\\d{1,}"),
+         rooms_num = str_extract(rooms_num, "\\d{1,}"),
+         rooms_num = as.numeric(rooms_num),
+         terrain_area = str_extract(params, "terrain_area<=>\\d{1,}(\\.\\d{1,2})?"),
+         terrain_area = str_extract(terrain_area, "\\d{1,}(\\.\\d{1,2})?"),
+         terrain_area = as.numeric(terrain_area),
+         is_bungalow = str_extract(params, "is_bungalow<=>\\d{1,}"),
+         is_bungalow = str_extract(is_bungalow, "\\d{1,}"),
+         is_bungalow = as.numeric(is_bungalow),
+         market = str_extract(params, "market<=>[a-z_]+"),
+         market = str_extract(market, "<=>[a-z_]+"),
+         market = str_extract(market, "[a-z_]+"),
+         building_type = str_extract(params, "building_type<=>[a-z_]+"),
+         building_type = str_extract(building_type, "<=>[a-z_]+"),
+         building_type = str_extract(building_type, "[a-z_]+"),
+         floors_num = str_match(params, "floor(.*?)<br>")[,2],
+         floors_num = str_match(floors_num, "<=>(.*)")[,2],
+         construction_status= str_extract(params,"construction_status<=>[a-z_]+"),
+         construction_status= str_extract(construction_status,"<=>[a-z_]+"),
+         construction_status= str_extract(construction_status, "[a-z_]+"),
+         build_year = str_extract(params, "build_year<=>\\d+"),
+         build_year = str_extract(build_year, "<=>\\d+"),
+         build_year = str_extract(build_year, "\\d+"),
+         building_material =str_extract(params, "building_material<=>[a-z_]+"),
+         building_material =str_extract(building_material, "<=>[a-z_]+"),
+         building_material =str_extract(building_material, "[a-z_]+"),
+         roofing =str_extract(params, "roofing<=>[a-z_]+"),
+         roofing =str_extract(roofing, "<=>[a-z_]+"),
+         roofing =str_extract(roofing, "[a-z_]+"),
+         recreational = str_extract(params, "recreational<=>\\d{1,}"),
+         recreational = str_extract(recreational, "\\d{1,}"),
+         recreational = as.numeric(recreational),
+         garret_type =str_extract(params, "garret_type<=>[a-z_]+"),
+         garret_type =str_extract(garret_type, "<=>[a-z_]+"),
+         garret_type =str_extract(garret_type, "[a-z_]+"),
+         roof_type =str_extract(params, "roof_type<=>[a-z_]+"),
+         roof_type =str_extract(roof_type, "<=>[a-z_]+"),
+         roof_type =str_extract(roof_type, "[a-z_]+"),
+         windows_type =str_extract(params, "windows_type<=>[a-z_]+"),
+         windows_type =str_extract(windows_type, "<=>[a-z_]+"),
+         windows_type =str_extract(windows_type, "[a-z_]+")) %>%
+  select(id, category,region_id,floor_area, rooms_num, price,is_business, market) ->train_small
+
+  train_small %>% mutate_all(~ifelse(is.na(.), median(., na.rm = TRUE), .)) -> train_dupa
+  train_final$market <- factor(train_small$market,levels = c("secondary", "primary"),labels = c(1, 0))
+  train_final$category <- factor(train_small$category,levels = c("Dom na sprzedaż", "Mieszkanie na sprzedaż"),labels = c(1, 0))
+
+print(train_final)
+```
+```{r}
+
+```
+
+```{r}
+library(randomForest)
+fit_rf = randomForest(price~., data=train, ntree=100, proximity=T)
+
+```
+1
+
+
+
+
