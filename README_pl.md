@@ -223,7 +223,7 @@ Express.builder()
 
 Proces przepływu danych przy wykorzystaniu metody płatności GooglePay wygląda następująco:
 
-![Google Pay](img/gpay.png?raw=true "Google Pay")
+![Google Pay](https://github.com/przelewy24/p24-mobile-lib-android/blob/master/img/diagram_google_pay_eng.png?raw=true "Google Pay")
 
 Po wyborze metody Google Pay, aplikacja powinna wysłać request o stokenizowane dane płatnika. W momencie otrzymania informacji zwrotnej z Google, aplikacja sprzedawcy przekazuje stokenizowane dane do własnego backendu, który rejestruje transakcję, a przekazane dane dołącza do żądania jako wartość parametru `p24_method_ref_id`. Po zarejestrowaniu transakcji token powinien trafić do aplikacji sprzedawcy, która wywoła metodę biblioteki z odpowiednim środowiskiem:
 
